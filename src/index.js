@@ -123,7 +123,10 @@ class Game extends React.Component {
     
     let status;
     if (winner) {
-      status = 'Winner: ' + winner;
+      if(winner === 'draw')
+          status = 'Draw';
+      else
+          status = 'Winner: ' + winner;
     } else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
@@ -171,12 +174,20 @@ function calculateWinner(squares) {
     [0, 4, 8],
     [2, 4, 6],
   ];
+  
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       return [ squares[a], a, b, c ];
     }
   }
-  return null;
+  
+  for (let i=0; i < 9; i++) {
+    if( squares[i] === null)
+        return null;
+  } 
+
+  return ['draw', null];
 }
+
 
